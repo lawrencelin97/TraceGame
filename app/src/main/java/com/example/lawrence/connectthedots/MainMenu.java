@@ -1,4 +1,4 @@
-package com.example.lawrence.tracegame;
+package com.example.lawrence.connectthedots;
 
 import android.graphics.Canvas;
 import android.graphics.Point;
@@ -37,21 +37,24 @@ public class MainMenu {
         resume.draw(canvas);
         gameMode.draw(canvas);
     }
-    public void actionDown(Point point){
-
-        if(newGame.overlaps(point)){
-            System.out.println("Start");
+    public void actionUp(Point point){
+        if(newGame.released(point)){
             panel.createGame(mode);
         }
-        if(resume.overlaps(point)){
+        if(resume.released(point)){
             panel.resume();
         }
-        if(gameMode.overlaps(point)){//currently set to 3 modes
+        if(gameMode.released(point)){//currently set to 1 modes
             if(mode<gameModes)
                 mode++;
             else
                 mode=1;
         }
+    }
+    public void actionDown(Point point){
+        newGame.pressed(point);
+        resume.pressed(point);
+        gameMode.pressed(point);
     }
 }
 

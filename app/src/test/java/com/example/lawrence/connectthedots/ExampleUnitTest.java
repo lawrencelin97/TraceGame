@@ -1,4 +1,4 @@
-package com.example.lawrence.tracegame;
+package com.example.lawrence.connectthedots;
 
 import org.junit.Test;
 

@@ -1,5 +1,4 @@
-package com.example.lawrence.tracegame;
-
+package com.example.lawrence.connectthedots;
 
 
 import android.content.Context;
@@ -63,7 +62,7 @@ public class DrawImage extends View {
 
     public void create() {
         bmp = BitmapFactory.decodeResource(getResources(), drawableFile);
-       // reduceResolution();
+        // reduceResolution();
         bmp = BitmapFactory.decodeResource(getResources(), drawableFile);
         bmp = Bitmap.createScaledBitmap(bmp, width, height, true);
     }

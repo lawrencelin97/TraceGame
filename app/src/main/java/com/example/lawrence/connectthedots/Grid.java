@@ -1,5 +1,4 @@
-package com.example.lawrence.tracegame;
-
+package com.example.lawrence.connectthedots;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -12,6 +11,7 @@ public class Grid implements GameObject{
     public Dot[] dots;
     private int numDots;
     private int size;
+    private int radius;
 
     Puzzle puzzle;
 
@@ -38,9 +38,13 @@ public class Grid implements GameObject{
         space=(xDim-(2*margin))/(size-1);
         int xPos = margin;
         int yPos = yDim -xDim+margin-yDim/30;
+
+        radius=(int)(space/(6.6-(float)size/2.3));
+        puzzle.setRadius(radius);
+
         for (int yCounter = 0; yCounter < size; yCounter++) {
             for (int xCounter = 0; xCounter < size; xCounter++) {
-                dots[yCounter * size + xCounter] = new Dot(xPos, yPos,(int)(space/(6.6-(float)size/2.3)));
+                dots[yCounter * size + xCounter] = new Dot(xPos, yPos,radius);
                 xPos += space;
             }
             xPos = margin;
@@ -139,14 +143,18 @@ public class Grid implements GameObject{
     @Override
     public void draw(Canvas canvas){
         for(int counter=0;counter<dots.length;counter++){
+
+            paint.setStyle(Paint.Style.STROKE);
+            paint.setStrokeWidth(xDim/80);
             if(puzzle.getPuzzle().contains(dots[counter]))
                 paint.setColor(Color.GRAY);
             else
                 paint.setColor(Color.RED);
-            canvas.drawCircle(dots[counter].getPoint().x,dots[counter].getPoint().y,dots[counter].getRectangle().width()/2,paint);
-            paint.setColor(Color.WHITE);
+            canvas.drawCircle(dots[counter].getPoint().x,dots[counter].getPoint().y,radius,paint);
+            //paint.setColor(Color.TRANSPARENT);
+            paint.setStyle(Paint.Style.FILL);
             //if(dots[counter]!=puzzle.getPuzzle().get(0))
-                canvas.drawCircle(dots[counter].getPoint().x,dots[counter].getPoint().y,dots[counter].getRectangle().width()*44/100,paint);
+            //canvas.drawCircle(dots[counter].getPoint().x,dots[counter].getPoint().y,dots[counter].getRectangle().width()*44/100,paint);
 
             if(image)
                 setDraw(canvas, counter, img);
@@ -161,12 +169,12 @@ public class Grid implements GameObject{
     }
     public void setDraw(Canvas canvas, int counter, Paint paint) {
         //draw basic rectangle of color paint
-        canvas.drawCircle(dots[counter].getPoint().x,dots[counter].getPoint().y,dots[counter].getRectangle().width()/4,paint);
+        canvas.drawCircle(dots[counter].getPoint().x,dots[counter].getPoint().y,radius/2,paint);
     }
     public void setDraw(Canvas canvas, int counter, DrawImage img)
     {
-        int l = dots[counter].getRectangle().left+dots[counter].getRectangle().width()/4;
-        int t = dots[counter].getRectangle().bottom+dots[counter].getRectangle().width()/4;
+        int l = dots[counter].getRectangle().left+radius/2;
+        int t = dots[counter].getRectangle().bottom+radius/2;
 
         img.setLocation(l,t);
 
@@ -193,10 +201,13 @@ public class Grid implements GameObject{
 
     }
 
+    public int getRadius(){return radius;}
     public Dot[] getDots(){
         return dots;
     }
     public int getSize(){return size;}
+    public int getX(){return xDim;}
+    public int getY(){return yDim;}
     public void setPuzzle(Puzzle puzzle){
         this.puzzle=puzzle;
     }

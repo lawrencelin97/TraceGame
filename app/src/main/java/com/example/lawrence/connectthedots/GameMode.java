@@ -1,4 +1,4 @@
-package com.example.lawrence.tracegame;
+package com.example.lawrence.connectthedots;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -54,7 +54,7 @@ public abstract class GameMode {
 
         this.x=x;
         this.y=y;
-        pauseButton = new Button("pause", x - 150, 200, 100, 100);
+        pauseButton = new PauseButton(x*87/100, y*12/200, x*9/100);
 
         timerSeconds=time;
         timerMS=timerSeconds*1000;
@@ -114,7 +114,10 @@ public abstract class GameMode {
         }
     }
     public void actionDown(Point point){
-        if (pauseButton.overlaps(point)) {
+        pauseButton.pressed(point);
+    }
+    public void actionUp(Point point){
+        if (pauseButton.released(point)) {
             pause();
         }
     }
@@ -145,8 +148,6 @@ public abstract class GameMode {
     }
     public abstract void createGame();
     public abstract void actionMove(int x, int y);
-    public abstract void actionUp(int x, int y);
-
 }
 
 

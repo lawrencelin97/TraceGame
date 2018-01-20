@@ -1,5 +1,4 @@
-package com.example.lawrence.tracegame;
-
+package com.example.lawrence.connectthedots;
 
 import android.app.Activity;
 import android.content.Context;
@@ -9,7 +8,9 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
+import android.graphics.PorterDuff;
 import android.graphics.Rect;
+import android.util.AttributeSet;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -42,6 +43,26 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         super(context);
         this.context = context;
 
+        start();
+    }
+
+    public GamePanel(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
+        // TODO Auto-generated constructor stub
+        this.context = context;
+
+        start();
+    }
+
+    public GamePanel(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        // TODO Auto-generated constructor stub
+        this.context = context;
+
+        start();
+    }
+
+    private void start(){
         getHolder().addCallback(this);
 
         thread = new MainThread(getHolder(), this);
@@ -83,9 +104,10 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+        Point pressed;
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                Point pressed = new Point((int) event.getX(), (int) event.getY());
+                pressed = new Point((int) event.getX(), (int) event.getY());
                 switch(state){
                     case -1:
                         gameOver.actionDown(pressed);
@@ -106,8 +128,17 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
                 break;
             case MotionEvent.ACTION_UP:
-                if (state==1) {
-                    game.actionUp((int) event.getX(), (int) event.getY());
+                pressed = new Point((int) event.getX(), (int) event.getY());
+                switch(state){
+                    case -1:
+                        gameOver.actionUp(pressed);
+                        break;
+                    case 0:
+                        mainMenu.actionUp(pressed);
+                        break;
+                    case 1:
+                        game.actionUp(pressed);
+                        break;
                 }
                 break;
         }
@@ -123,6 +154,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
+        canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
         //canvas.drawColor(Color.WHITE);
         switch (state){
             case -1:
@@ -181,6 +213,10 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         }
     }
 }
+
+
+
+
 
 
 

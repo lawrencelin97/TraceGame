@@ -1,5 +1,4 @@
-package com.example.lawrence.tracegame;
-
+package com.example.lawrence.connectthedots;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -75,11 +74,15 @@ public class GameOver {
 
     }
     public void actionDown(Point point){
-        if (returnButton.overlaps(point)) {
+        returnButton.pressed(point);
+    }
+    public void actionUp(Point point){
+        if (returnButton.released(point)) {
             panel.setState(0);
         }
     }
 }
+
 
 
 

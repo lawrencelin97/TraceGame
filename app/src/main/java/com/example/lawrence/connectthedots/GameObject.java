@@ -1,5 +1,4 @@
-package com.example.lawrence.tracegame;
-
+package com.example.lawrence.connectthedots;
 
 import android.graphics.Canvas;
 

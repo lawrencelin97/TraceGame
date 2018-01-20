@@ -1,4 +1,4 @@
-package com.example.lawrence.tracegame;
+package com.example.lawrence.connectthedots;
 
 import android.graphics.Canvas;
 import android.view.Surface;
@@ -37,7 +37,7 @@ public class MainThread extends Thread{
 
         while(running){
             startTime=System.nanoTime();
-            //canvas=null;
+            canvas=null;
 
             try{
                 canvas=this.surfaceHolder.lockCanvas();

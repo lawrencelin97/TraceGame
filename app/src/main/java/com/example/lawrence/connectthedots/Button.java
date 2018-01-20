@@ -1,6 +1,4 @@
-package com.example.lawrence.tracegame;
-
-
+package com.example.lawrence.connectthedots;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -17,8 +15,10 @@ public class Button {
     public static final int LEFTALIGN=-2;
     public static final int RIGHTALIGN=-3;
 
-    private static int ScreenX;
-    private static int ScreenY;
+    protected static int ScreenX;
+    protected static int ScreenY;
+
+    protected boolean pressed=false;
 
     public int x = 0;
     public int y = 0;
@@ -28,13 +28,17 @@ public class Button {
     public String textB = "";
     public int color = Color.RED;
     public int background = Color.GRAY;
-    Rect textbox = new Rect();
-    Paint paint = new Paint();
-    int alpha=255;
-    boolean isImage = false;
-    DrawImage img;
+    protected Rect textbox = new Rect();
+    protected Paint paint = new Paint();
+    protected int alpha=255;
+    protected boolean isImage = false;
+    protected DrawImage img;
 
-    public Button(String text, int y, int size){
+    public Button(){
+
+    }
+
+    public Button(String text, int y, int size){ //set a centered button
         this.y=y;
         textSize=size;
         textB=text;
@@ -44,7 +48,7 @@ public class Button {
         System.out.println(bounds.width());
         this.height=bounds.height();
         this.width=bounds.width();
-        setX(-1);
+        setX(CENTER);
         textbox = new Rect(x-15, y - height-15, x + width+15, y+15);
     }
     public Button(String text, int x, int y, int size){
@@ -184,9 +188,18 @@ public class Button {
             paint.setTextSize(this.textSize);
             canvas.drawText(this.textB, this.x, this.y+height/2, paint);
         }
+        if(pressed){
+            paint.setColor(Color.BLACK);
+            paint.setAlpha(100);
+            canvas.drawRect(textbox, paint);
+        }
     }
-
-    public boolean overlaps(Point pt) {
+    public void pressed(Point pt){
+        if(pt.x < this.textbox.right && pt.x > this.textbox.left && pt.y > this.textbox.top && pt.y < this.textbox.bottom)
+            pressed=true;
+    }
+    public boolean released(Point pt) {
+        pressed=false;
         return pt.x < this.textbox.right && pt.x > this.textbox.left && pt.y > this.textbox.top && pt.y < this.textbox.bottom;
     }
 }

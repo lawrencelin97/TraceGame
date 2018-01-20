@@ -1,5 +1,4 @@
-package com.example.lawrence.tracegame;
-
+package com.example.lawrence.connectthedots;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -22,29 +21,33 @@ public class Player implements GameObject {
     private Grid grid;
 
     private int color=Color.BLACK;
+    private int x;
 
     private Paint paint = new Paint();
     // public EndGame gameOver;
 
     public Player(Grid grid){
         this.grid=grid;
+        x=grid.getX();
     }
 
     @Override
     public void draw(Canvas canvas) {//draws the path the player took
-        paint.setStrokeWidth(strokewidth);
+        paint.setStrokeWidth(x/80);
         paint.setColor(color);
-
+        paint.setStyle(Paint.Style.FILL_AND_STROKE);
         if (hasReached.size() >= 1) {
             for (int i = 0; i < hasReached.size(); i++){
                 if(size[i]==0)
-                    size[i]=hasReached.get(i).getRectangle().width()/4;
+                    size[i]=hasReached.get(i).getRectangle().width()/5;
                 else if(size[i]<hasReached.get(i).getRectangle().width()/2)
-                    size[i]+=hasReached.get(i).getRectangle().width()/20;
+                    size[i]+=hasReached.get(i).getRectangle().width()/18;
                 if(size[i]>hasReached.get(i).getRectangle().width()/2)
                     size[i]=hasReached.get(i).getRectangle().width()/2;
                 canvas.drawCircle(hasReached.get(i).getPoint().x,hasReached.get(i).getPoint().y,size[i],paint);
             }
+            paint.setStyle(Paint.Style.FILL);
+            paint.setStrokeWidth(strokewidth);
             for (int i = 0; i < hasReached.size() - 1; i++) {
                 Point pt1 = hasReached.get(i).getPoint();
                 Point pt2 = hasReached.get(i + 1).getPoint();
