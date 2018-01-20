@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">TraceGame</string>
+    <string name="title_activity_pause_menu">PauseMenu</string>
+    <string name="title_activity_idk">idk</string>
+    <string name="hiscore">0</string>
+
+</resources>
