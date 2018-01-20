@@ -19,4 +19,6 @@ public class Dot {
     public Rect getRectangle(){
         return rectangle;
     }
+	//poop
+
 }
